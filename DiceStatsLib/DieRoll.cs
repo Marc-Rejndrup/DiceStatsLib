@@ -42,7 +42,7 @@ namespace DiceStatsLib
             this.Die = die;
         }
 
-        public Dictionary<int, Rational> Probabilities { get; private set; }
+        public ProbabilityDict Probabilities { get; private set; }
 
         private void CalcProbabilities()
         {

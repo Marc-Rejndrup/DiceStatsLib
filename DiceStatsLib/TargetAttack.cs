@@ -12,7 +12,11 @@ namespace DiceStatsLib
 
         public int AttackBonus { get; set; }
 
+        public DiceRoll AttackBonusDice { get; set; }
+
         public Attack BaseAttack { get; set; }
+
+        public int AutoHitBy { get; set; }
 
         public TargetAttack(int baseDamage, int attackBonus, Attack baseAttack)
         {
@@ -21,17 +25,23 @@ namespace DiceStatsLib
             this.AttackBonus = attackBonus;
 
             this.BaseAttack = baseAttack;
+
+            this.AutoHitBy = 20;
         }
         public TargetAttack(int baseDamage, int attackBonus, int baseDie) : this(baseDamage, attackBonus, new Attack(baseDie)) { }
 
-        public Dictionary<int, Rational> Probabilities (int OpposingAC)
+        public ProbabilityDict Probabilities (int OpposingAC)
         {
             {
-                var mod = new Dictionary<int, Rational>();
+                var mod = new ProbabilityDict();
 
                 var stopped = OpposingAC - AttackBonus;
 
                 var baseProbabilities = BaseAttack.Probabilities;
+
+                var bonusProbabilities = AttackBonusDice.Probabilities;
+
+                var combinedProbabilities = baseProbabilities + bonusProbabilities;
 
                 List<int> keysToRemove = new List<int>();
 

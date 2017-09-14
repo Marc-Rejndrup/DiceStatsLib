@@ -8,7 +8,7 @@ namespace DiceStatsLib
 {
     public interface DiceRoll
     {
-        Dictionary<int, Rational> Probabilities { get; }
+        ProbabilityDict Probabilities { get; }
 
         List<DiceRoll> Rolls { get; set; }
 
@@ -21,7 +21,7 @@ namespace DiceStatsLib
 
     public abstract class DiceRollBase
     {
-        public Dictionary<int, Rational> Probabilities { get; protected set; }
+        public ProbabilityDict Probabilities { get; protected set; }
 
         protected List<DiceRoll> rolls;
 
@@ -86,9 +86,9 @@ namespace DiceStatsLib
             }
         }
 
-        protected Dictionary<int, Rational> RollCalc(Func<int, int, int> calculation, List<DiceRoll> diceRolls)
+        protected ProbabilityDict RollCalc(Func<int, int, int> calculation, List<DiceRoll> diceRolls)
         {
-            Dictionary<int, Rational> tempProbs = null;
+            ProbabilityDict tempProbs = null;
 
             foreach (var roll in diceRolls)
             {
@@ -98,7 +98,7 @@ namespace DiceStatsLib
                 }
                 else
                 {
-                    var tempestProbs = new Dictionary<int, Rational>();
+                    var tempestProbs = new ProbabilityDict();
 
                     var curMaxValue = roll.MaxValue + tempProbs.Keys.Max();
                     var curMinValue = roll.MinValue + tempProbs.Keys.Min();

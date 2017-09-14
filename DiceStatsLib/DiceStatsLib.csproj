@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Attack.cs" />
     <Compile Include="Attacker.cs" />
+    <Compile Include="ProbabilityDict.cs" />
     <Compile Include="TargetAttack.cs" />
     <Compile Include="DiceRange.cs" />
     <Compile Include="DieRoll.cs" />

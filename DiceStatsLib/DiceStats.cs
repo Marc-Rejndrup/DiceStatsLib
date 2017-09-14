@@ -8,7 +8,7 @@ namespace DiceStatsLib
 {
     public static class ProbabilityUtils
     {
-        public static Rational Average(Dictionary<int, Rational> probabilities)
+        public static Rational Average(ProbabilityDict probabilities)
         {
             var avg = new Rational(0, 1);
 
@@ -20,9 +20,9 @@ namespace DiceStatsLib
             return avg;
         }
 
-        public static Dictionary<int, Rational> CalcImprovementOfReRoll(Dictionary<int, Rational> probabilities)
+        public static ProbabilityDict CalcImprovementOfReRoll(ProbabilityDict probabilities)
         {
-            var improvementProb = new Dictionary<int, Rational>();
+            var improvementProb = new ProbabilityDict();
 
             for (var i = 1; i < probabilities.Keys.Max() - (probabilities.Keys.Min() - 1); i++)
             {
@@ -39,9 +39,9 @@ namespace DiceStatsLib
             return improvementProb;
         }
 
-        public static Dictionary<int, Rational> BestOf(Dictionary<int, Rational> one, Dictionary<int, Rational> two)
+        public static ProbabilityDict BestOf(ProbabilityDict one, ProbabilityDict two)
         {
-            var probabilities = new Dictionary<int, Rational>();
+            var probabilities = new ProbabilityDict();
 
             for (var i = Math.Max(one.Keys.Min(), two.Keys.Min()) ; i < Math.Max(one.Keys.Max(), two.Keys.Max()); i++)
             {
@@ -59,14 +59,14 @@ namespace DiceStatsLib
             return probabilities;
         }
 
-        public static Dictionary<int, Rational> Advantage(Dictionary<int, Rational> one)
+        public static ProbabilityDict Advantage(ProbabilityDict one)
         {
             return BestOf(one, one);
         }
 
-        public static Dictionary<int, Rational> WorstOf(Dictionary<int, Rational> one, Dictionary<int, Rational> two)
+        public static ProbabilityDict WorstOf(ProbabilityDict one, ProbabilityDict two)
         {
-            var probabilities = new Dictionary<int, Rational>();
+            var probabilities = new ProbabilityDict();
 
             for (var i = Math.Min(one.Keys.Min(), two.Keys.Min()); i < Math.Min(one.Keys.Max(), two.Keys.Max()); i++)
             {
@@ -84,12 +84,12 @@ namespace DiceStatsLib
             return probabilities;
         }
 
-        public static Dictionary<int, Rational> Disadvantage(Dictionary<int, Rational> one)
+        public static ProbabilityDict Disadvantage(ProbabilityDict one)
         {
             return WorstOf(one, one);
         }
 
-        public static Rational SumProbabilities(Dictionary<int, Rational> probabilities)
+        public static Rational SumProbabilities(ProbabilityDict probabilities)
         {
             var sum = new Rational(0, 1);
 
@@ -100,7 +100,7 @@ namespace DiceStatsLib
             return sum;
         }
 
-        public static Rational AtLeast(this Dictionary<int, Rational> probabilities, int result)
+        public static Rational AtLeast(this ProbabilityDict probabilities, int result)
         {
             var sum = new Rational(0, 1);
 

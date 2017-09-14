@@ -9,7 +9,6 @@ namespace DiceStatsLib
     public class Attack
     {
         public DiceRoll BaseActivator { get { return BaseActivator; } set { this.BaseActivator = value; CalcProbabilities(); } }
-        //while needed, this needs to represent bonuses that don't contribute to "range results"(crits), like bless.
 
         public List<DiceRange> DicePool { get { return DicePool; } set { this.DicePool = value; CalcProbabilities(); } }
 
@@ -19,17 +18,17 @@ namespace DiceStatsLib
 
             DicePool = new List<DiceRange>()
             {
-                new DiceRange(20, 20, new SumDiceRoll((LoneDiceRoll)new DieRoll(new Die(normalDamageDie)))),//crit
+                new DiceRange(new SumDiceRoll((LoneDiceRoll)new DieRoll(new Die(normalDamageDie))), 20, 20),//crit
 
                 new DiceRange(new SumDiceRoll((LoneDiceRoll)new DieRoll(new Die(normalDamageDie))))//normal damage
             };
         }
 
-        public Dictionary<int, Rational> Probabilities { get; private set; }
+        public ProbabilityDict Probabilities { get; private set; }
 
         private void CalcProbabilities()
         {
-            Probabilities = new Dictionary<int, Rational>();
+            Probabilities = new ProbabilityDict();
 
             var activatorOdds = BaseActivator.Probabilities;
 
@@ -52,15 +51,13 @@ namespace DiceStatsLib
             }
         }
 
-        public int Roll()
+        public int Roll(int activatorResult)
         {
-            int activatorResult = BaseActivator.Roll();
-
             int value = 0;
 
             foreach (var die in DicePool)
             {
-                if (activatorResult >= die.MinActivate && activatorResult <= die.MaxActivate)
+                if (activatorResult >= die.StartActivate && activatorResult <= die.StopActivate)
                 {
                     foreach (var curDie in die.Dice.Rolls)
                     {
@@ -68,7 +65,6 @@ namespace DiceStatsLib
                     }
                 }
             }
-
             return value;
         }
     }

@@ -131,4 +131,16 @@ namespace DiceStatsLib
                 return a;
         }
     }
+    public static class RationalEnumerableExtensions
+    {
+        public static Rational Sum(this IEnumerable<Rational> source)
+        {
+            return source.Aggregate((x, y) => x + y);
+        }
+
+        public static Rational Sum<T>(this IEnumerable<T> source, Func<T, Rational> selector)
+        {
+            return source.Select(selector).Aggregate((x, y) => x + y);
+        }
+    }
 }

@@ -34,11 +34,11 @@ namespace DiceStatsLib
 
         public int NumValues { get { return this.MaxValue - this.MinValue + 1; } }
 
-        public Dictionary<int, Rational> Probabilities { get; private set; }
+        public ProbabilityDict Probabilities { get; private set; }
 
         private void CalcProbabilities()
         {
-            Probabilities = new Dictionary<int, Rational>();
+            Probabilities = new ProbabilityDict();
 
             for (var i = this.MinValue; i <= this.MaxValue; i++)
             {
