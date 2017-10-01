@@ -38,7 +38,7 @@ namespace DiceStatsLib
 
             while (pds.Length > 0)
             {
-                result = Transform(keyTransformation, valueTransformation, result, pds[0]);
+                result = Combine(keyTransformation, valueTransformation, result, pds[0]);
                 pdsList.RemoveAt(0);
             }
             return pds[0];
